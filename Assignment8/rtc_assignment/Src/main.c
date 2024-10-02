@@ -25,28 +25,24 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#include "led.h"
-#include "timer.h"
-int main(void)
-{
+#include "rtc.h"
+#include "uart.h"
+
+int main(void) {
+	char str[64];
 	SystemInit();
-		Timer_Init();
-		LedInit(LED_ORANGE_PIN);
-		LedInit(LED_GREEN_PIN);
-		LedInit(LED_RED_PIN);
-		LedInit(LED_BLUE_PIN);
-		while (1) {
-			//Timer_Delay(10000);
-			LedOn(LED_ORANGE_PIN);
-			LedOn(LED_GREEN_PIN);
-			LedOn(LED_RED_PIN);
-			LedOn(LED_BLUE_PIN);
-			Timer_Delay(3000);
-			LedOff(LED_ORANGE_PIN);
-			LedOff(LED_GREEN_PIN);
-			LedOff(LED_RED_PIN);
-			LedOff(LED_BLUE_PIN);
-			Timer_Delay(7000);
-		}
+	UartInit(9600);
+	UartPuts("STM32 RTC Demo!!\r\n");
+	RTC_Date dt = { .Date = 28, .Month = 2, .Year = 24 };
+	RTC_Time tm = { .Hour = 23, .Minute = 59, .Second = 50 };
+	RTC_Init(&dt, &tm);
+	while (1) {
+		RTC_GetDate(&dt);
+		RTC_GetTime(&tm);
+		sprintf(str, "%02d-%02d-20%02d  %02d:%02d:%02d\r\n", dt.Date,
+				dt.Month, dt.Year,tm.Hour, tm.Minute, tm.Second);
+		UartPuts(str);
+		DelayMs(500);
+	}
 	return 0;
 }
