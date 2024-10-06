@@ -49,17 +49,17 @@ int main(void) {
 			UartPuts("This is Green pin\r\n");
 			break;
 		case 2:
-			LedOn(LED_GREEN_PIN);
+			LedOn(LED_ORANGE_PIN);
 			DelayMs(1000);
 			UartPuts("This is Orange pin\r\n");
 			break;
 		case 3:
-			LedOn(LED_GREEN_PIN);
+			LedOn(LED_RED_PIN);
 			DelayMs(1000);
 			UartPuts("This is Red pin\r\n");
 			break;
 		case 4:
-			LedOn(LED_GREEN_PIN);
+			LedOn(LED_BLUE_PIN);
 			DelayMs(1000);
 			UartPuts("This is Blue pin\r\n");
 		default:
